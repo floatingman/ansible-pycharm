@@ -1,0 +1,3 @@
+---
+pycharm_url: "http://download.jetbrains.com/python/pycharm-community-{{pycharm_version}}.tar.gz"
+pycharm_folder_name: "{{result_pycharm_folder_name.stdout_lines.0}}"

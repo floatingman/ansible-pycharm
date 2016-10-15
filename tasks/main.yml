@@ -1,0 +1,57 @@
+---
+- name: Install needed dependancies
+  action: "{{ ansible_pkg_mgr }} state=present name={{ item }}"
+  with_items:
+    - tar
+    - unzip
+  tags: ["packages","pycharm"]
+
+- name: Find latest version
+  uri:
+    url: "https://data.services.jetbrains.com/products/releases?code=PCC%2CPCP&latest=true&type=release"
+    return_content: yes
+    validate_certs: no
+    body_format: json
+  register: pycharm_releases_response
+  when: pycharm_version == 'latest'
+  tags: ["packages","pycharm"]
+
+- set_fact:
+    pycharm_version: "{{ pycharm_releases_response.json.PCC.0.version }}"
+  when: pycharm_version == 'latest'
+  tags: ["packages","pycharm"]
+
+- name: Download pycharm
+  get_url: url={{pycharm_url}} dest={{pycharm_tmp}}
+  tags: ["packages","pycharm"]
+
+- name: Ensure installation directory
+  file:
+    state=directory
+    mode=0755
+    dest={{pycharm_install_dir}}
+  tags: ["packages","pycharm"]
+
+- name: Unarchive pycharm
+  unarchive:
+    copy=no
+    src={{pycharm_tmp}}
+    dest={{pycharm_install_dir}}
+  tags: ["packages","pycharm"]
+
+- name: Retreive pycharm dir name
+  command: ls -t {{pycharm_install_dir}}
+  register: result_pycharm_folder_name
+  tags: ["configuration","pycharm"]
+
+#- name: Ensure pycharm is configured
+#  template: src=idea.properties.j2 dest={{pycharm_install_dir}}/{{pycharm_folder_name}}/bin/idea.properties
+#  tags: ["configuration","pycharm"]
+
+#- name: Ensure pycharm bin exist
+#  template: src=pycharm.j2 dest=/usr/bin/pycharm mode=755
+#  tags: ["configuration","pycharm"]
+
+#- name: Ensure pycharm shortcut is present
+#  template: src=pycharm.desktop.j2 dest=/usr/share/applications/pycharm.desktop
+#  tags: ["configuration","pycharm"]
