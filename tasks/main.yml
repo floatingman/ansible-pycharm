@@ -48,9 +48,9 @@
 #  template: src=idea.properties.j2 dest={{pycharm_install_dir}}/{{pycharm_folder_name}}/bin/idea.properties
 #  tags: ["configuration","pycharm"]
 
-#- name: Ensure pycharm bin exist
-#  template: src=pycharm.j2 dest=/usr/bin/pycharm mode=755
-#  tags: ["configuration","pycharm"]
+- name: Ensure pycharm bin exist
+  template: src=pycharm.j2 dest=/usr/bin/pycharm mode=755
+  tags: ["configuration","pycharm"]
 
 #- name: Ensure pycharm shortcut is present
 #  template: src=pycharm.desktop.j2 dest=/usr/share/applications/pycharm.desktop
