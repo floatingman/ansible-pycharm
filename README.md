@@ -1,7 +1,7 @@
-ansible-role-intellij
+ansible-role-pycharm
 =====================
 
-Ansible role to install IntelliJ IDEA Community Edition
+Ansible role to install Pycharm Community Edition
 
 # Usage
 ```
@@ -14,4 +14,3 @@ Ansible role to install IntelliJ IDEA Community Edition
 - Required Java installed
 
 # Links
-- https://galaxy.ansible.com/list#/roles/3110
