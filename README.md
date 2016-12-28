@@ -7,7 +7,7 @@ Ansible role to install Pycharm Community Edition
 ```
  - hosts: all
    roles:
-     - jdauphant.intellij
+     - pycharm
 ```
 
 # Notes
